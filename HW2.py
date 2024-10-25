@@ -40,3 +40,4 @@ plt.show()
 
 
 ###QUESTION E2###
+#bonjour les amis
