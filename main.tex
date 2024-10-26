@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 
+
 \title{\textbf{MATRIX COMPUTATIONS: HOMEWORK 2}}  % Declares the document's title.
 \author{Andre Theo,
 Dejean Maxime,
@@ -14,15 +15,83 @@ Nouidei Safiya}
 
 \section{Exercise A: Krylov subspaces}
 \subsection*{(A1)}
+As assumed in the assignement, $K_{r+1}(A,b) \subseteq K_{r}(A,b) $. 
+If we can prove that we also have $K_{r+1}(A,b) \supseteq K_{r}(A,b) $, it means that we proved that $K_{r+1}(A,b) = K_{r}(A,b) $. 
+Since, by definition of the krylov subspaces as $span\{b, Ab, ..., A^rb\}$,  all elements of $K_{r}(A,b)$ are in $K_{r+1}(A,b)$, we know that, indeed, $K_{r+1}(A,b) \supseteq K_{r}(A,b) $. And thus, we have proved the equality between the two spaces. 
+We then need to show that, for $s\geq r$, $K_{s}(A,b) = K_{r}(A,b) $. It can be done with a proof by induction. 
+Indeed, since the eqaulity holds for all $r$, it means that $K_{r+2}(A,b) = K_{r+1}(A,b) = K_{r}(A,b) $ etc. This means that for all $i$ such that $s-r\leq i$, $K_{r+i}(A,b) = K_{r+(i-1)}(A,b) =... =  K_{r}(A,b) $. 
+This shows that $K_{s}(A,b) = K_{r}(A,b) $.
+
+
 \subsection*{(A2)}
+Let's prove that $ dim( K_r (A,b)) = r$ by induction. Since $ dim( K_n (A,b)) = s$ and $r \leq s$, it means that, 
+at each iteration i so that $i \leq r$, the dimension of  $ dim( K_i (A,b)) = i$. Indeed, no combination will already be in the span
+since r is smaller than s. 
+We thus have:
+\begin{itemize}
+    \item $i = 1$: $ K_i (A,b) = \{b\}$ and $dim( K_i (A,b)) = 1$
+    \item $i = 2$: $ K_i (A,b) = \{b, Ab\}$ and $dim( K_i (A,b)) = 2$
+    \item \dots
+    \item $i = r$: $ K_i (A,b) = K_r (A,b) $ and $dim( K_i (A,b)) = r$
+\end{itemize}
 
 \section{Exercise B: Arnoldi’s iteration}
 \subsection*{(B1)}
+We want to show that $ R_s $ has non-zero elements on its diagonal.
+Fisrt, since $ K_s(A, b) = [b, Ab, \dots, A^{s-1}b] $, it consists of $ s $ linearly independent columns. Thus, $ K_s(A, b) $ has full column rank,
+ so $ rank(K_s(A, b)) = s $.
+In any QR decomposition $ M = QR$ where $ M \in R^{m \times s} $ and $ M $ has full column rank, R is invertible. 
+Therefore, R is nonsingular, meaning all its diagonal elements are non-zero.
+Finally, in our case, since $ K_s(A, b) $ has full column rank, $R_s $ is invertible and hence has non-zero elements on its diagonal.
+Thus, we conclude that $ R_s $ has non-zero elements on its diagonal otherwise $dim(K_s (A,b)) \neq s$.
+
 \subsection*{(B2)}
+The goal is to show that for each $ 1 \leq r \leq s - 1 $,
+\[
+A Q_s[1:r] R_s[1:r, 1:r] = Q_s[1:r'] R_s[1:r', 2:r'],
+\]
+where $ r' = r + 1 $.
+Let's do it step by step : 
+\begin{enumerate}
+    \item \textbf{Krylov Subspace Properties:} \\
+    The Krylov subspace $ K_r(A, b) $ is defined as:
+    \[
+    K_r(A, b) = span\{b, Ab, A^2b, \dots, A^{r-1}b\}.
+    \]
+    By construction, applying $ A $ to $ K_r(A, b) $ generates $ K_{r+1}(A, b) $:
+    \[
+    K_{r+1}(A, b) = span\{b, Ab, A^2b, \dots, A^r b\}.
+    \]
+    Therefore, $ K_{r+1}(A, b) $ extends $ K_r(A, b) $ by including the new vector $ A^r b $, making it a shifted version of $ K_r(A, b) $ with an additional dimension.
+
+    \item \textbf{QR Decomposition of $ K_r(A, b) $:} \\
+    Given the QR decomposition of $ K_s(A, b) $, we have:
+    \[
+    K_s(A, b) = Q_s R_s,
+    \]
+    where $ Q_s \in R^{n \times s} $ is an orthonormal basis for $ K_s(A, b) $ and $ R_s \in R^{s \times s} $ is upper-triangular. The submatrices $ Q_s[1:r] $ and $ R_s[1:r, 1:r] $ provide a basis and the associated coefficients for the subspace $ K_r(A, b) $.
+
+    \item \textbf{Applying $ A $ to $ Q_s[1:r] R_s[1:r, 1:r] $:} \\
+    When we apply $ A $ to $ Q_s[1:r] R_s[1:r, 1:r] $, we obtain a matrix that spans the extended subspace $ K_{r+1}(A, b) $. This new subspace can be represented by:
+    \[
+    A Q_s[1:r] R_s[1:r, 1:r] = Q_s[1:r'] R_s[1:r', 2:r'],
+    \]
+    where $ r' = r + 1 $. 
+\end{enumerate}
+
+
 \subsection*{(B3)}
+
+
 \subsection*{(B4)}
+
+
 \subsection*{(B5)}
+
+
 \subsection*{(B6)}
+
+
 \subsection*{(B7)}
 
 \newpage
