@@ -15,24 +15,24 @@ Nouidei Safiya}
 
 \section{Exercise A: Krylov subspaces}
 \subsection*{(A1)}
-As assumed in the assignement, $K_{r+1}(A,b) \subseteq K_{r}(A,b) $. 
-If we can prove that we also have $K_{r+1}(A,b) \supseteq K_{r}(A,b) $, it means that we proved that $K_{r+1}(A,b) = K_{r}(A,b) $. 
-Since, by definition of the krylov subspaces as $span\{b, Ab, ..., A^rb\}$,  all elements of $K_{r}(A,b)$ are in $K_{r+1}(A,b)$, we know that, indeed, $K_{r+1}(A,b) \supseteq K_{r}(A,b) $. And thus, we have proved the equality between the two spaces. 
-We then need to show that, for $s\geq r$, $K_{s}(A,b) = K_{r}(A,b) $. It can be done with a proof by induction. 
-Indeed, since the eqaulity holds for all $r$, it means that $K_{r+2}(A,b) = K_{r+1}(A,b) = K_{r}(A,b) $ etc. This means that for all $i$ such that $s-r\leq i$, $K_{r+i}(A,b) = K_{r+(i-1)}(A,b) =... =  K_{r}(A,b) $. 
-This shows that $K_{s}(A,b) = K_{r}(A,b) $.
+As assumed in the assignement, $\mathcal{K}_{r+1}(A,b) \subseteq \mathcal{K}_{r}(A,b) $. 
+If we can prove that we also have $\mathcal{K}_{r+1}(A,b) \supseteq \mathcal{K}_{r}(A,b) $, it means that we proved that $\mathcal{K}_{r+1}(A,b) = \mathcal{K}_{r}(A,b) $. 
+Since, by definition of the krylov subspaces as $span\{b, Ab, ..., A^rb\}$,  all elements of $\mathcal{K}_{r}(A,b)$ are in $\mathcal{K}_{r+1}(A,b)$, we know that, indeed, $\mathcal{K}_{r+1}(A,b) \supseteq \mathcal{K}_{r}(A,b) $. And thus, we have proved the equality between the two spaces. 
+We then need to show that, for $s\geq r$, $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) $. It can be done with a proof by induction. 
+Indeed, since the eqaulity holds for all $r$, it means that $\mathcal{K}_{r+2}(A,b) = \mathcal{K}_{r+1}(A,b) = \mathcal{K}_{r}(A,b) $ etc. This means that for all $i$ such that $s-r\leq i$, $\mathcal{K}_{r+i}(A,b) = \mathcal{K}_{r+(i-1)}(A,b) =... =  \mathcal{K}_{r}(A,b) $. 
+This shows that $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) $.
 
 
 \subsection*{(A2)}
-Let's prove that $ dim( K_r (A,b)) = r$ by induction. Since $ dim( K_n (A,b)) = s$ and $r \leq s$, it means that, 
-at each iteration i so that $i \leq r$, the dimension of  $ dim( K_i (A,b)) = i$. Indeed, no combination will already be in the span
+Let's prove that $ dim( \mathcal{K}_r (A,b)) = r$ by induction. Since $ dim( \mathcal{K}_n (A,b)) = s$ and $r \leq s$, it means that, 
+at each iteration i so that $i \leq r$, the dimension of  $ dim( \mathcal{K}_i (A,b)) = i$. Indeed, no combination will already be in the span
 since r is smaller than s. 
 We thus have:
 \begin{itemize}
-    \item $i = 1$: $ K_i (A,b) = \{b\}$ and $dim( K_i (A,b)) = 1$
-    \item $i = 2$: $ K_i (A,b) = \{b, Ab\}$ and $dim( K_i (A,b)) = 2$
+    \item $i = 1$: $ \mathcal{K}_i (A,b) = \{b\}$ and $dim( \mathcal{K}_i (A,b)) = 1$
+    \item $i = 2$: $ \mathcal{K}_i (A,b) = \{b, Ab\}$ and $dim( \mathcal{K}_i (A,b)) = 2$
     \item \dots
-    \item $i = r$: $ K_i (A,b) = K_r (A,b) $ and $dim( K_i (A,b)) = r$
+    \item $i = r$: $ \mathcal{K}_i (A,b) = \mathcal{K}_r (A,b) $ and $dim( \mathcal{K}_i (A,b)) = r$
 \end{itemize}
 
 \section{Exercise B: Arnoldi’s iteration}
@@ -43,7 +43,7 @@ Fisrt, since $ K_s(A, b) = [b, Ab, \dots, A^{s-1}b] $, it consists of $ s $ line
 In any QR decomposition $ M = QR$ where $ M \in R^{m \times s} $ and $ M $ has full column rank, R is invertible. 
 Therefore, R is nonsingular, meaning all its diagonal elements are non-zero.
 Finally, in our case, since $ K_s(A, b) $ has full column rank, $R_s $ is invertible and hence has non-zero elements on its diagonal.
-Thus, we conclude that $ R_s $ has non-zero elements on its diagonal otherwise $dim(K_s (A,b)) \neq s$.
+Thus, we conclude that $ R_s $ has non-zero elements on its diagonal otherwise $rank(K_s (A,b)) \neq s$.
 
 \subsection*{(B2)}
 The goal is to show that for each $ 1 \leq r \leq s - 1 $,
@@ -84,22 +84,62 @@ Let's do it step by step :
 
 
 \subsection*{(B4)}
-
+We want to show that $span\{q_1, ... , q_r\} \subseteq \mathcal{K}_r(A,b)$. This is equivalent, by definition, 
+to proving that  $span\{q_1, ... , q_r\} \subseteq span \{ b, Ab,..., A^{r-1}b\}$.
+Let's proceed by induction: 
+\begin{itemize}
+    \item $q_1 = \frac{b}{||b||}$ : this is indeed included in $\mathcal{K}_r(A,b)$ as it is just the normalisation of b
+    and it can be express only in terms of b. 
+    \item by definition of $\upsilon$ and $ \omega$ in algorithm 1, 
+    $q_2 = \frac{\omega}{||\omega||} = \frac{A q_1 - (q_1^T A q_1)q_1}{||A q_1 - (q_1^T A q_1)q_1||}$. $q_2$ is also included in the krylov space because it is the normalisation of $Ab$ with regards to $q_1 = \frac{b}{||b||}$. 
+    \item we use the same arguments for each $q_i$ to prove that it belongs to the subsapce since it can be expressed with only A and $q_{i-1}$. 
+\end{itemize}
 
 \subsection*{(B5)}
-
+From (B4), we know that $span\{q_1, ... , q_r\} \subseteq \mathcal{K}_r(A,b)$.
+Since $dim(span\{q_1, ... , q_r\}) = r$ (as it is formed of orthoromals vectors)
+and $dim(\mathcal{K}_r(A,b)) = r$ (as we proved in (A2)), it means that the two spans have the same dimension. 
+Thus, as one is include or equal to the other, the two spans are actually equal. 
 
 \subsection*{(B6)}
 
+
+Arnoldi's iteration constructs an orthonormal basis $ \{ q_1, q_2, \dots, q_s \} $ 
+for $ K_s(A, b) $. 
+During the iteration, each new vector $ q_{r+1} $ is obtained as a linear combination of $ A q_r $, 
+with orthogonalization against previous $ q_i $'s to ensure orthonormality. The algorithm halts when the next vector $ A q_s $ lies within the span of the existing vectors $ \{ q_1, q_2, \dots, q_s \} $, indicating that no new dimension is added.
+Since here s is the dimension of $dim(span\{q_1, ... , q_s\})$, we know that any krylov subsapces with $n>s$ will still
+be of dimesion s because the vectors that we want to add already lie in the span. 
 
 \subsection*{(B7)}
 
 \newpage
 \section{Exercise C: GMRES for linear system solution approximation}
 \subsection*{(C1)}
+Let's set $x = Qy$ with $y \in R^r$. We now have
+\[
+AQy = QHy + \beta q e_r^T y
+\]
+\[
+||Ax-b|| = ||QHy + \beta q e_r^T y -b ||
+\]
+We thus have :
+\[
+\min_{x \in \mathcal{K}_r(A,b)} ||Ax-b|| = \min_{y \in R^r} ||
+[Q ~ q] [Hy ~\beta e_r^Ty]^T - b||
+= \min_{y \in R^r} ||
+[Q ~ q]( [H ~\beta e_r^T]^T y - ||b|| e_{r+1,1})||
+\]
+As $[Q ~ q]$ is an isometry, the norm is not impacted by it and it gives us exactly what we wanted to find, with $\tilde{H}= [H ~\beta e_r^T]^T$.
+And, as $x = Qy$, if 
+$y*$ is a minimiser of (4), then $x* = Qy*$ is a minimiser of (3). 
+
 \subsection*{(C2)}
+
 \subsection*{(C3)}
+
 \subsection*{(C4)}
+
 \subsection*{(C5)}
 
 \section{Exercise D: Arnoldi’s method for eigenvalue approximation}
