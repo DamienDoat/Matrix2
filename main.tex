@@ -1,7 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 
-
 \title{\textbf{MATRIX COMPUTATIONS: HOMEWORK 2}}  % Declares the document's title.
 \author{Andre Theo,
 Dejean Maxime,
@@ -136,11 +135,85 @@ $y*$ is a minimiser of (4), then $x* = Qy*$ is a minimiser of (3).
 
 \subsection*{(C2)}
 
+To solve the minimization problem in Equation (3),
+\[
+\min_{x \in K_r(A, b)} \|Ax - b\|,
+\]
+instead of directly solving the linear system $ Ax = b $, we use the GMRES (Generalized Minimal Residual) method, which approximates the solution within a Krylov subspace $ K_r(A, b) $. 
+
+Given a large matrix $ A \in R^{n \times n} $ and a vector $ b \in R^n $, solving $ Ax = b $ directly can be computationally intensive, 
+typically requiring $ O(n^3) $ operations for exact solutions (for example, Gaussian elimination). In contrast, GMRES aims to solve the minimization problem within a subspace 
+of dimension $ r $, which is often much smaller than $ n $, making it less costly.
+
+In (C1), we have rewritten the minimisation problem as follows: 
+\[
+\min_{y \in R^r} \left\| H y - \|b\| e_{1} \right\|,
+\]
+where $ H $ is of size $ r \times r $, smaller than $ n \times n $.
+
+
+The computational cost to solve this reduced problem involves:
+\begin{itemize}
+    \item Constructing $ H $ and $ \beta $ through Arnoldi iteration, which requires $ O(r^2 n) $ FLOPs.
+    \item Solving the least-squares problem $ \min_{y \in R^r} \| H y - \|b\| e_1 \| $ using QR decomposition or another method,
+     which has a complexity of $ O(r^3) $.
+\end{itemize}
+These complexities are much smaller than $ O(n^3) $ for direct solutions, particularly for large $ n $ and much smaller $ r $ values. Moreover, 
+here we consider that $H$ and $\beta$ are given. 
+
 \subsection*{(C3)}
+By definition of krylov subspaces, since $x \in \{b, Ab, ..., A^{r-1}b\}$, 
+we can write $x=p(A)b$. We then have:
+\[
+b -Ax = b - A p(A)b = (I-A p(A))b 
+\]
+Let's set $q(A) = I-A p(A)$. Actually, $q(A)$ also belongs to the
+ $\mathcal{P}_r^0$ set. Indeed, if $A = 0$, $q(A) = I$. This means that, interverting the symbols $p$ and $q$, 
+ we get what we wanted: 
+ \[
+\min_{x \in K_r(A, b)} \|Ax - b\|  = \min_{p \in \mathcal{P}_r^0} \|p(A)b\|
+ \]
 
 \subsection*{(C4)}
+Since $ A $ is symmetric, it can be diagonalized as $ A = Q \Lambda Q^T $, 
+where $ Q $ is an orthogonal matrix , and $ \Lambda = diag(\lambda_1, \dots, \lambda_n) $ contains the eigenvalues of $ A $ on the diagonal.
+We use the spectral norm of $ A $ which is defined as:
+   \[
+   \|A\| = \max_{\|x\| = 1} \|Ax\|.
+   \]
+
+For any vector $ x \in R^n $ with $ \|x\| = 1 $, let $ y = Q^T x $. 
+Since $ Q $ is orthogonal, we have $ \|y\| = \|x\| = 1 $, and we can write:
+ \[
+\|Ax\| = \|Q \Lambda Q^\top x\| = \|\Lambda y\| = \left\|
+   [\begin{array}{ccc}
+        \lambda_1 & &  \\
+         & \ddots &  \\
+         & & \lambda_n 
+    \end{array} ] y\right \|.
+\]
+Finally, since $ \|\Lambda y\| = \sqrt{\sum_{i=1}^n (\lambda_i y_i)^2} \leq \max_{i} |\lambda_i| \cdot \|y\| = \max_{i} |\lambda_i| $, the spectral norm $ \|A\| $ is indeed $ \max_{1 \leq i \leq n} |\lambda_i| $.
 
 \subsection*{(C5)}
+By the result in (C3), we know that:
+   \[
+   \min_{x \in K_r(A, b)} \|Ax - b\| = \min_{p \in P_r^0} \|p(A)b\|.
+   \]
+
+then, since $ A $ is symmetric, it can be diagonalized as $ A = Q\Lambda Q^T$ where $ Q $ is orthogonal and $ \Lambda = diag(\lambda_1, \dots, \lambda_n) $.
+Therefore, for any polynomial $ p \in P_r^0 $, we have:
+   \[
+   p(A) = Q p(\Lambda) Q^T,
+   \]
+   where $ p(\Lambda) = diag(p(\lambda_1), \dots, p(\lambda_n)) $.
+ Thus,
+   \[
+   \|p(A) b\| = \|Q p(\Lambda) Q^T b\| = \|p(\Lambda) Q^T b\| \leq \max_{1 \leq i \leq n} |p(\lambda_i)| \cdot \|Q^T b\| = \max_{1 \leq i \leq n} |p(\lambda_i)| \cdot \|b\|.
+   \]
+Finally, taking the minimum over $ p \in P_r^0 $, we obtain:
+   \[
+   \min_{x \in K_r(A, b)} \|Ax - b\| = \min_{p \in P_r^0} \|p(A) b\| \leq \|b\| \min_{p \in P_r^0} \max_{1 \leq i \leq n} |p(\lambda_i)|.
+   \]
 
 \section{Exercise D: Arnoldi’s method for eigenvalue approximation}
 \subsection*{(D1)}
