@@ -32,7 +32,61 @@ def construct_matrices(n):
 
     return A, b
 
+def norm (x):
+    to_return = 0
+    for i in range(len(x)):
+        to_return += x[i]**2
+    return to_return**(1/2)
+
+def matrix_product(A,x):
+    m, n = np.shape(A) 
+    to_return = np.zeros(m)
+    for i in range(m):
+        for j in range(n):
+            to_return[i] += A[i][j]*x[j]
+    return to_return
+
+def dot(x,y):
+    to_return = 0
+    for i in range(len(x)):
+        to_return += x[i]*y[i]
+    return to_return
+
+def Arnoldi(A, b, order):
+    H_return = []
+    H = np.zeros((order[-1]+1, order[-1]))
+    Q = np.zeros((len(b), order[-1]+1))
+    q = b/norm(b)
+    beta = 0
+    Q[:,0] = q
+    l = 0
+    proj = 0
+    for i in range(1, order[-1]+1):
+        v = matrix_product(A,q)
+        for j in range(i):
+            proj = dot(v,Q[:,j])
+            H[j,i-1] = proj
+            v -= proj*Q[:,j]
+        beta = norm(v)
+        v = v/beta
+        H[i,i-1] = beta
+        q = v
+        if i in order:
+            H_return.append(H[0:order[l],0:order[l]+1])
+            l += 1
+    return H
+            
+        
+
 A, b = construct_matrices(n)
+r = [10, 20, 30, 40, 50]
+Arnoldi_result = Arnoldi(A, b, r)
+u = np.zeros((5,101))
+print(Arnoldi_result)
+for i in range(len(r)):
+    H = Arnoldi_result[i]
+    u[i] = np.linalg.solve(H.T@H, norm(b)*H.T[:,0])
+
 
 plt.figure("Sparse")
 plt.spy(A, marker='o', color='r', markersize=0.6)
@@ -40,4 +94,3 @@ plt.show()
 
 
 ###QUESTION E2###
-#bonjour les amis
