@@ -258,7 +258,13 @@ Finally, taking the minimum over $ p \in P_r^0 $, we obtain:
 
 \section{Exercise D: Arnoldi’s method for eigenvalue approximation}
 \subsection*{(D1)}
-
+Let $(\lambda, y) \in \mathbf{C} \times \mathbf{C}^r$ be an eigenpair of $H$. We have that
+\begin{align*}
+    \|Ax-\lambda x \| & = \|AQy-\lambda Qy \|, & (x=Qy)\\
+    &=\|(QH+\beta e_r^T)y-\lambda Qy \|, &  (AQ = QH+\beta e_r^T) \\
+    &=\|Q \lambda y+\beta e_r^Ty-\lambda Qy \|, & (Hy=\lambda y)\\
+    &=\|\beta e_r^Ty \|. &
+\end{align*}
 \section{Exercise E: Implementation}
 
 \end{document}
