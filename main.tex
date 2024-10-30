@@ -188,15 +188,15 @@ of dimension $ r $, which is often much smaller than $ n $, making it less costl
 
 In (C1), we have rewritten the minimisation problem as follows: 
 \[
-\min_{y \in R^r} \left\| H y - \|b\| e_{1} \right\|,
+\min_{y \in R^r} \left\| \tilde{H} y - \|b\| e_{r+1,1} \right\|,
 \]
-where $ H $ is of size $ r \times r $, smaller than $ n \times n $.
+
 
 
 The computational cost to solve this reduced problem involves:
 \begin{itemize}
     \item Constructing $ H $ and $ \beta $ through Arnoldi iteration, which requires $ O(r^2 n) $ FLOPs.
-    \item Solving the least-squares problem $ \min_{y \in R^r} \| H y - \|b\| e_1 \| $ using QR decomposition or another method,
+    \item Solving the least-squares problem using QR decomposition or another method,
      which has a complexity of $ O(r^3) $.
 \end{itemize}
 These complexities are much smaller than $ O(n^3) $ for direct solutions, particularly for large $ n $ and much smaller $ r $ values. Moreover, 
