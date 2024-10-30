@@ -28,17 +28,17 @@ So if $s=r+1$, we have that $\mathcal{K}_{s}(A,b)=\mathcal{K}_{r}(A,b)$.\\
 
 Now let's see what happens when $s>r+1$. Let's that assume $\mathcal{K}_{s-1}(A,b)\subseteq\mathcal{K}_{r}(A,b)$. We'll show that this equality also holds for $s$.\\
 
-Every element of $\mathcal{K}_{r+1}$ can be written as a linear combinaison of elements of $\mathcal{K}_{r}$, in particular,
+Every element of $\mathcal{K}_{s-1}$ can be written as a linear combinaison of elements of $\mathcal{K}_{r}$, in particular,
 \begin{align*}
-    A^sb = \alpha_0b +\alpha_1Ab + \dots +\alpha_{r-1} A^{r-1}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}
+    A^{s-2}b = \alpha_0b +\alpha_1Ab + \dots +\alpha_{r-1} A^{r-1}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}
 \end{align*}\\
 By multiplying by $A$ we get that
 \begin{align*}
-    A^{s+1}b = \alpha_0Ab +\alpha_1A^2b + \dots +\alpha_{r-1} A^{r}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}.
+    A^{s-1}b = \alpha_0Ab +\alpha_1A^2b + \dots +\alpha_{r-1} A^{r}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}.
 \end{align*}\\
-But since $A^s$ already was a linear combinaison of the rest, we can write
+But since $A^r$ already was a linear combinaison of the rest, we can write
 \begin{align*}
-    A^{s+1}b = \alpha_0b + \beta_1Ab +\beta_2A^2b + \dots +\beta_{r-1} A^{r-1}b, \hspace{10pt} \beta_i \in \mathbf{R}, \forall i \in \{1,\dots,r-1 \}.
+    A^{s-1}b = \beta_0b + \beta_1Ab +\beta_2A^2b + \dots +\beta_{r-1} A^{r-1}b, \hspace{10pt} \beta_i \in \mathbf{R}, \forall i \in \{1,\dots,r-1 \}.
 \end{align*}
 So $\mathcal{K}_{s}(A,b)\subseteq\mathcal{K}_{r}(A,b)$.\\
 
@@ -153,7 +153,7 @@ for $ K_s(A, b) $.
 During the iteration, each new vector $ q_{r+1} $ is obtained as a linear combination of $ A q_r $, 
 with orthogonalization against previous $ q_i $'s to ensure orthonormality. The algorithm halts when the next vector $ A q_s $ lies within the span of the existing vectors $ \{ q_1, q_2, \dots, q_s \} $, indicating that no new dimension is added.
 Since here s is the dimension of $dim(span\{q_1, ... , q_s\})$, we know that any krylov subsapces with $n>s$ will still
-be of dimesion s because the vectors that we want to add already lie in the span. 
+be of dimension s as seen is (A2) because the vectors that we want to add already lie in the span. 
 
 \subsection*{(B7)}
 
@@ -218,8 +218,7 @@ In (C1), we have rewritten the minimisation problem as follows:
 The computational cost to solve this reduced problem involves:
 \begin{itemize}
     \item Constructing $ H $ and $ \beta $ through Arnoldi iteration, which requires $ O(r^2 n) $ FLOPs.
-    \item Solving the least-squares problem using QR decomposition or another method,
-     which has a complexity of $ O(r^3) $.
+    \item Solving the least-squares problem using QR decomposition or another method (matrix products of size r and eliminations of a matrix of size r plus the multiplication by Q, so $(2r^3 + \frac{2}{3}r^3 + 2nr^2)FLOPS$).
 \end{itemize}
 These complexities are much smaller than $ O(n^3) $ for direct solutions, particularly for large $ n $ and much smaller $ r $ values. Moreover, 
 here we consider that $H$ and $\beta$ are given. 
