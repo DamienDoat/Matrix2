@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+
 
 \title{\textbf{MATRIX COMPUTATIONS: HOMEWORK 2}}  % Declares the document's title.
 \author{Andre Theo,
@@ -80,6 +82,27 @@ Let's do it step by step :
 
 
 \subsection*{(B3)}
+We know from (B2) that for each $1 \leq r \leq s-1$, 
+\[
+A Q_s[1:r] R_s[1:r, 1:r] = Q_s[1:r'] R_s[1:r', 2:r'],
+\]
+holds. We laos know that $R_s[1:r, 1:r]$ is full rank. So we get 
+\[
+A Q_s[1:r]  = Q_s[1:r'] R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}.
+\]
+Let $C=R_s[1:r', 2:r']$ and $D=R_s[1:r, 1:r]^{-1}$, we know that $D$ is upper diagonal since it's the inverse of an upper diagonal matrix, and we know that $C$ is Hessenberg. In other words, for every line i of $C$ and for every column $k$ if $D$
+\begin{align*}
+    C_{ij} &= 0 \text{ if } j < i-1, \text{ and} \\
+    D_{jk} &= 0 \text{ if } k < j.
+\end{align*}
+
+So if we take \([AB]_{ik}=\sum_{j=1}^{r}A_{ij}B_{jk}\), every term will be equal to \(0\) if \(k<j\leq i-1\), so if \(k < i-1\). Which shows that the obtained matrix \(R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}\) is Hessenberg. So it holds that there is a Hessenberg matrix \(H_r\in \mathbf{R}^{r\times r'}\) such that
+
+\[
+A Q_s[1:r]  = Q_s[1:r'] H_r,
+\]
+
+with \(H_r=R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}\).
 
 
 \subsection*{(B4)}
