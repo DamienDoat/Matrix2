@@ -135,6 +135,24 @@ be of dimesion s because the vectors that we want to add already lie in the span
 
 \subsection*{(B7)}
 
+We know from (B5) that for each $1 \leq r \leq s-1$, $span(q_1, \dots, q_r) = \mathcal{K}_r$. We also know that by construction, the elements of $\{ q_r \}_{1 \leq r \leq s-1}$ are orthogonal and normed. Now let $Q_s=[q_1, \dots, q_r]$, we will prove that $Q^*_sK_s=R_s$ with $R_s$ an upper-triangular matrix.\\
+First let's consider the first column of $R$ , we will call it $R_{(1)}$. We have that 
+\begin{align*}
+    R_{(1)} = \sum_{i=1}^{s} q_i^TK_s[:][1]e_{s,i}.
+\end{align*}
+But we know that $K_s[:][1]=b$ (the first column of $K_s$), that $q_1=b/\|b\|$, and that all the $\{ q_i \}_{1 \leq i \leq s-1}$ are orthogonal and normed. Which means that for all $i \in \{2, \dots, s \}$ it holds that $q_i^TK_s[:][i]=0$. So only the first term won't be equal to $0$.\\
+
+Now we will look at the $r$th column of $R_s$ and we'll call it $R_{(r)}$. We know that $span(q_1, \dots, q_r) = \mathcal{K}_r$, in other words 
+\begin{align*}
+    K_s[:][r]=\sum_{i=1}^{r}\alpha_{r,i}q_i, \hspace{3pt} \alpha_{r,i} \in \mathbf{R}
+\end{align*}
+This means that $K_s[:][r]$ is othogonal to all the elemnts of $\{ q_i \}_{r+1 \leq i \leq s-1}$, in other words for all $r+1 \leq i \leq s-1$, $q_i^TK_s[:][r]=0$, and we have that
+\begin{align*}
+    R_{(r)} = \sum_{i=1}^{s} q_i^TK_s[:][r]e_{s,i}.
+\end{align*}
+So every element under the diagonal of $R_s$ will be equal to $0$.\\
+So we have that $K_s=Q_sR_s$ with $R_s$ upper-triangular.
+
 \newpage
 \section{Exercise C: GMRES for linear system solution approximation}
 \subsection*{(C1)}
