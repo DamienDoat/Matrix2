@@ -16,12 +16,33 @@ Nouidei Safiya}
 
 \section{Exercise A: Krylov subspaces}
 \subsection*{(A1)}
-As assumed in the assignement, $\mathcal{K}_{r+1}(A,b) \subseteq \mathcal{K}_{r}(A,b) $. 
-If we can prove that we also have $\mathcal{K}_{r+1}(A,b) \supseteq \mathcal{K}_{r}(A,b) $, it means that we proved that $\mathcal{K}_{r+1}(A,b) = \mathcal{K}_{r}(A,b) $. 
-Since, by definition of the krylov subspaces as $span\{b, Ab, ..., A^rb\}$,  all elements of $\mathcal{K}_{r}(A,b)$ are in $\mathcal{K}_{r+1}(A,b)$, we know that, indeed, $\mathcal{K}_{r+1}(A,b) \supseteq \mathcal{K}_{r}(A,b) $. And thus, we have proved the equality between the two spaces. 
-We then need to show that, for $s\geq r$, $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) $. It can be done with a proof by induction. 
-Indeed, since the eqaulity holds for all $r$, it means that $\mathcal{K}_{r+2}(A,b) = \mathcal{K}_{r+1}(A,b) = \mathcal{K}_{r}(A,b) $ etc. This means that for all $i$ such that $s-r\leq i$, $\mathcal{K}_{r+i}(A,b) = \mathcal{K}_{r+(i-1)}(A,b) =... =  \mathcal{K}_{r}(A,b) $. 
-This shows that $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) $.
+First of all, we have that 
+\begin{align*}
+    \mathcal{K}_{r}(A,b) &=span\{b, Ab, ..., A^{r-1}b\},\\
+    \mathcal{K}_{s}(A,b) &=span\{b, Ab, ..., A^{s-1}b\}.
+\end{align*}
+So since $r\leq s$, we have that $\mathcal{K}_r(A,b) \subseteq \mathcal{K}_s(A,b)$.\\
+
+As assumed in the assignement, $\mathcal{K}_{r+1}(A,b) \subseteq \mathcal{K}_{r}(A,b) $.
+So if $s=r+1$, we have that $\mathcal{K}_{s}(A,b)=\mathcal{K}_{r}(A,b)$.\\
+
+Now let's see what happens when $s>r+1$. Let's that assume $\mathcal{K}_{s-1}(A,b)\subseteq\mathcal{K}_{r}(A,b)$. We'll show that this equality also holds for $s$.\\
+
+Every element of $\mathcal{K}_{r+1}$ can be written as a linear combinaison of elements of $\mathcal{K}_{r}$, in particular,
+\begin{align*}
+    A^sb = \alpha_0b +\alpha_1Ab + \dots +\alpha_{r-1} A^{r-1}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}
+\end{align*}\\
+By multiplying by $A$ we get that
+\begin{align*}
+    A^{s+1}b = \alpha_0Ab +\alpha_1A^2b + \dots +\alpha_{r-1} A^{r}b, \hspace{10pt} \alpha_i \in \mathbf{R}, \forall i \in \{0,\dots,r-1 \}.
+\end{align*}\\
+But since $A^s$ already was a linear combinaison of the rest, we can write
+\begin{align*}
+    A^{s+1}b = \alpha_0b + \beta_1Ab +\beta_2A^2b + \dots +\beta_{r-1} A^{r-1}b, \hspace{10pt} \beta_i \in \mathbf{R}, \forall i \in \{1,\dots,r-1 \}.
+\end{align*}
+So $\mathcal{K}_{s}(A,b)\subseteq\mathcal{K}_{r}(A,b)$.\\
+
+This shows that for all $s\geq r$, $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) $.
 
 
 \subsection*{(A2)}
