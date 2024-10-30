@@ -116,24 +116,26 @@ def questionE2():
     H_tilde = Arnoldi_result_H[0]
     Q = Arnoldi_result_Q[0]
     H = H_tilde[:-1,:]
-    beta = H_tilde[-1:-1]
+    beta = H_tilde[-1][-1]
     lambd, y = np.linalg.eig(H)
-    print(np.sort(lambd))
+    #print(np.sort(lambd))
     small = np.argsort(lambd)
     small_eigvals = np.zeros(5)
     small_eigvects = np.zeros((n,5))
     for i in range(5):
         small_eigvals[i] = lambd[small[i]]
         small_eigvects[:,i] = Q@y[:,small[i]]
-    print(small_eigvals)
+        #print("Difference of D1: ", np.linalg.norm(A@small_eigvects[:,i] - small_eigvals[i]*small_eigvects[:,i]) - np.abs(beta*(y[:,small[i]])[-1]))
+    #print(small_eigvals)
 
     fig = plt.figure()
-    colors = ['b', 'r', 'g', '#ff7f0e', '#9467bd']
+    colors = ['blue', 'red', 'green', 'lightcoral', 'purple']
+    xsi = np.linspace(-2,2,101)
     for i in range(5):
-        plt.scatter(np.linspace(1,101,101), (small_eigvects.T)[i], c = colors[i], label='Eigvect n°' + str(i+1), s=10) 
-    plt.xlabel("ième component")
-    plt.ylabel("value")
-    plt.title("Approximate eigvects of A associated to 5 smallest eigvals of H")
+        plt.plot(xsi, (small_eigvects.T)[i], color=colors[i], label='Eigenfun n°' + str(i+1)) 
+    plt.xlabel("xsi")
+    plt.ylabel("u_i")
+    plt.title("Approximate eigfun associated to 5 smallest eigvals of H")
     plt.legend()
     plt.show()
 
