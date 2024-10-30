@@ -48,7 +48,8 @@ This shows that for all $s\geq r$, $\mathcal{K}_{s}(A,b) = \mathcal{K}_{r}(A,b) 
 \subsection*{(A2)}
 Let's prove that $ dim( \mathcal{K}_r (A,b)) = r$ by induction. Since $ dim( \mathcal{K}_n (A,b)) = s$ and $r \leq s$, it means that, 
 at each iteration i so that $i \leq r$, the dimension of  $ dim( \mathcal{K}_i (A,b)) = i$. Indeed, no combination will already be in the span
-since r is smaller than s. 
+since r is smaller than s. If it was, then as observed in (A1), all the following Krylov subspaces would be in included in this one, and the
+dimensions wouldn't be s as supposed. 
 We thus have:
 \begin{itemize}
     \item $i = 1$: $ \mathcal{K}_i (A,b) = \{b\}$ and $dim( \mathcal{K}_i (A,b)) = 1$
@@ -60,7 +61,7 @@ We thus have:
 \section{Exercise B: Arnoldi’s iteration}
 \subsection*{(B1)}
 We want to show that $ R_s $ has non-zero elements on its diagonal.
-Fisrt, since $ K_s(A, b) = [b, Ab, \dots, A^{s-1}b] $, it consists of $ s $ linearly independent columns. Thus, $ K_s(A, b) $ has full column rank,
+First, since $ K_s(A, b) = [b, Ab, \dots, A^{s-1}b] $, it consists of $ s $ linearly independent columns. Thus, $ K_s(A, b) $ has full column rank,
  so $ rank(K_s(A, b)) = s $.
 In any QR decomposition $ M = QR$ where $ M \in R^{m \times s} $ and $ M $ has full column rank, R is invertible. 
 Therefore, R is nonsingular, meaning all its diagonal elements are non-zero.
@@ -94,7 +95,7 @@ Let's do it step by step :
     where $ Q_s \in R^{n \times s} $ is an orthonormal basis for $ K_s(A, b) $ and $ R_s \in R^{s \times s} $ is upper-triangular. The submatrices $ Q_s[1:r] $ and $ R_s[1:r, 1:r] $ provide a basis and the associated coefficients for the subspace $ K_r(A, b) $.
 
     \item \textbf{Applying $ A $ to $ Q_s[1:r] R_s[1:r, 1:r] $:} \\
-    When we apply $ A $ to $ Q_s[1:r] R_s[1:r, 1:r] $, we obtain a matrix that spans the extended subspace $ K_{r+1}(A, b) $. This new subspace can be represented by:
+    When we apply $ A $ to $ Q_s[1:r] R_s[1:r, 1:r] $, we obtain a matrix that spans the extended subspace $ AK_{r}(A, b) $. This new subspace can be represented by the orthonormal basis $Q_{s}$:
     \[
     A Q_s[1:r] R_s[1:r, 1:r] = Q_s[1:r'] R_s[1:r', 2:r'],
     \]
@@ -107,7 +108,7 @@ We know from (B2) that for each $1 \leq r \leq s-1$,
 \[
 A Q_s[1:r] R_s[1:r, 1:r] = Q_s[1:r'] R_s[1:r', 2:r'],
 \]
-holds. We laos know that $R_s[1:r, 1:r]$ is full rank. So we get 
+holds. We also know that $R_s[1:r, 1:r]$ is full rank. So we get 
 \[
 A Q_s[1:r]  = Q_s[1:r'] R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}.
 \]
@@ -117,7 +118,7 @@ Let $C=R_s[1:r', 2:r']$ and $D=R_s[1:r, 1:r]^{-1}$, we know that $D$ is upper di
     D_{jk} &= 0 \text{ if } k < j.
 \end{align*}
 
-So if we take \([AB]_{ik}=\sum_{j=1}^{r}A_{ij}B_{jk}\), every term will be equal to \(0\) if \(k<j\leq i-1\), so if \(k < i-1\). Which shows that the obtained matrix \(R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}\) is Hessenberg. So it holds that there is a Hessenberg matrix \(H_r\in \mathbf{R}^{r\times r'}\) such that
+So if we take \([CD]_{ik}=\sum_{j=1}^{r}C_{ij}D_{jk}\), every term will be equal to \(0\) if \(k<j\leq i-1\), so if \(k < i-1\). Which shows that the obtained matrix \(R_s[1:r', 2:r']R_s[1:r, 1:r]^{-1}\) is Hessenberg. So it holds that there is a Hessenberg matrix \(H_r\in \mathbf{R}^{r\times r'}\) such that
 
 \[
 A Q_s[1:r]  = Q_s[1:r'] H_r,
@@ -286,6 +287,22 @@ Let $(\lambda, y) \in \mathbf{C} \times \mathbf{C}^r$ be an eigenpair of $H$. We
     &=\|Q \lambda y+\beta e_r^Ty-\lambda Qy \|, & (Hy=\lambda y)\\
     &=\|\beta e_r^Ty \|. &
 \end{align*}
+
+
 \section{Exercise E: Implementation}
+\subsection*{(E1)}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/E1_latex.png}
+\caption{Solution of Poisson's equation}
+\label{fig:poisson}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/E2_latex.png}
+\caption{Eigenfunctions of Schrödinger's equation}
+\label{fig:Schrödinger}
+\end{figure}
 
 \end{document}
